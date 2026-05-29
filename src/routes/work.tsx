@@ -1,7 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
 import { work } from "@/content/work";
-import { Placeholder } from "@/components/ui/Placeholder";
+import { BrandSlider } from "@/components/work/BrandSlider";
 import { RevealText } from "@/components/ui/RevealText";
 
 export const Route = createFileRoute("/work")({
@@ -11,13 +10,12 @@ export const Route = createFileRoute("/work")({
       {
         name: "description",
         content:
-          "An index of selected graphic design work — brand identities, editorial design, and pattern systems for fashion and lifestyle brands.",
+          "Full brand identity case studies — Celéne Skin and Fierelle Walk. Logos, palettes, packaging, and editorial systems for luxury fashion and lifestyle brands.",
       },
       { property: "og:title", content: "Work — Alishba Khalid" },
       {
         property: "og:description",
-        content:
-          "Selected graphic design work — brand identities, editorial design, and pattern systems.",
+        content: "Full brand identity case studies for luxury fashion and lifestyle brands.",
       },
     ],
   }),
@@ -25,15 +23,12 @@ export const Route = createFileRoute("/work")({
 });
 
 function WorkIndex() {
-  const [hovered, setHovered] = useState<string | null>(null);
-  const active = work.find((w) => w.slug === hovered) ?? work[0];
-
   return (
     <section className="bg-paper pt-32 md:pt-40">
       <div className="editorial-container">
         <div className="border-b border-ink/15 pb-10 md:pb-16">
           <RevealText as="p" className="label-caps text-ink-soft">
-            Index &mdash; 2024 &ndash; 2025
+            Brand Identity &mdash; 2025
           </RevealText>
           <RevealText
             as="h1"
@@ -44,59 +39,49 @@ function WorkIndex() {
             <br />
             <span className="font-display not-italic font-bold">Work.</span>
           </RevealText>
+          <RevealText as="p" delay={0.2} className="mt-8 max-w-xl text-base leading-relaxed text-ink-soft md:text-lg">
+            Two full brand systems, slide by slide — from logo to palette to packaging.
+          </RevealText>
         </div>
 
-        <div className="grid grid-cols-1 gap-12 py-16 md:grid-cols-12 md:gap-16">
-          {/* The numbered index — left column on desktop */}
-          <ol className="md:col-span-7">
-            {work.map((piece) => (
-              <li
-                key={piece.slug}
-                className="group border-b border-ink/10"
-                onMouseEnter={() => setHovered(piece.slug)}
-                onMouseLeave={() => setHovered(null)}
-              >
-                <Link
-                  to="/work/$slug"
-                  params={{ slug: piece.slug }}
-                  className="grid grid-cols-12 items-baseline gap-4 py-6 transition-colors md:py-10"
-                  data-cursor="hover"
-                >
-                  <span className="col-span-2 font-display text-xl text-ink-soft md:text-2xl">
-                    {piece.number}
-                  </span>
-                  <div className="col-span-7 md:col-span-7">
-                    <h2 className="font-display text-2xl text-ink transition-transform duration-500 ease-out group-hover:translate-x-2 md:text-4xl lg:text-5xl">
-                      {piece.title}
-                    </h2>
-                    <p className="mt-2 label-caps text-ink-soft md:hidden">
-                      {piece.discipline}
-                    </p>
-                  </div>
-                  <p className="col-span-3 hidden label-caps text-ink-soft md:block">
-                    {piece.discipline}
+        <div className="space-y-28 py-20 md:space-y-40 md:py-28">
+          {work.map((piece) => (
+            <article key={piece.slug} id={piece.slug} className="scroll-mt-32">
+              <div className="mb-8 flex flex-wrap items-end justify-between gap-4 md:mb-10">
+                <div>
+                  <p className="label-caps text-ink-soft">
+                    {piece.number} &nbsp;/&nbsp; {piece.discipline}
                   </p>
-                </Link>
-              </li>
-            ))}
-          </ol>
-
-          {/* Sticky preview — right column on desktop */}
-          <aside className="hidden md:col-span-5 md:block">
-            <div className="sticky top-32">
-              <div className="transition-opacity duration-500">
-                <Placeholder
-                  src={active.cover.src}
-                  alt={active.cover.alt}
-                  aspect={active.cover.aspect}
-                  label={active.title}
-                />
-                <p className="mt-4 font-italic-display text-lg text-ink-soft">
-                  {active.brief}
-                </p>
+                  <h2 className="mt-3 font-display text-3xl text-ink md:text-5xl">{piece.title}</h2>
+                  <p className="mt-3 max-w-xl font-italic-display text-lg text-ink-soft md:text-xl">
+                    {piece.brief}
+                  </p>
+                </div>
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-1.5">
+                    {piece.palette.map((c) => (
+                      <span
+                        key={c}
+                        className="h-6 w-6 rounded-full border border-ink/10"
+                        style={{ backgroundColor: c }}
+                        title={c}
+                      />
+                    ))}
+                  </div>
+                  <Link
+                    to="/work/$slug"
+                    params={{ slug: piece.slug }}
+                    className="label-caps text-ink underline-offset-4 hover:underline"
+                    data-cursor="hover"
+                  >
+                    Full case &rarr;
+                  </Link>
+                </div>
               </div>
-            </div>
-          </aside>
+
+              <BrandSlider slides={piece.slides} title={piece.title} />
+            </article>
+          ))}
         </div>
       </div>
     </section>
