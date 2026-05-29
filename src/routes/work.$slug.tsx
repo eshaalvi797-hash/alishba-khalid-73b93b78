@@ -1,6 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { findWork, work } from "@/content/work";
-import { Placeholder } from "@/components/ui/Placeholder";
+import { BrandSlider } from "@/components/work/BrandSlider";
 import { RevealText } from "@/components/ui/RevealText";
 
 export const Route = createFileRoute("/work/$slug")({
@@ -14,7 +14,7 @@ export const Route = createFileRoute("/work/$slug")({
     return {
       meta: [
         { title: p ? `${p.title} — Alishba Khalid` : "Project — Alishba Khalid" },
-        { name: "description", content: p?.brief ?? "Project case study." },
+        { name: "description", content: p?.brief ?? "Brand identity case study." },
         { property: "og:title", content: p ? `${p.title} — Alishba Khalid` : "Project" },
         { property: "og:description", content: p?.brief ?? "" },
       ],
@@ -46,8 +46,7 @@ function ProjectDetail() {
 
   return (
     <article className="bg-paper pt-32 md:pt-40">
-      {/* ── Title block ───────────────────────────────────────────────── */}
-      <header className="editorial-container pb-12 md:pb-20">
+      <header className="editorial-container pb-12 md:pb-16">
         <RevealText as="p" className="label-caps text-ink-soft">
           {piece.number} &nbsp;/&nbsp; {piece.discipline} &nbsp;/&nbsp; {piece.year}
         </RevealText>
@@ -60,20 +59,13 @@ function ProjectDetail() {
         </RevealText>
       </header>
 
-      {/* ── Cover ─────────────────────────────────────────────────────── */}
-      <div className="w-full">
-        <div className="editorial-container">
-          <Placeholder
-            src={piece.cover.src}
-            alt={piece.cover.alt}
-            aspect={piece.cover.aspect}
-            label={piece.title}
-          />
-        </div>
+      {/* Slide-bar preview */}
+      <div className="editorial-container">
+        <BrandSlider slides={piece.slides} title={piece.title} />
       </div>
 
-      {/* ── Brief + Description ───────────────────────────────────────── */}
-      <section className="editorial-container grid grid-cols-1 gap-10 py-24 md:grid-cols-12 md:gap-16 md:py-40">
+      {/* Brief + description + palette */}
+      <section className="editorial-container grid grid-cols-1 gap-10 py-24 md:grid-cols-12 md:gap-16 md:py-32">
         <div className="md:col-span-4">
           <RevealText as="p" className="label-caps text-ink-soft">
             The brief
@@ -86,49 +78,27 @@ function ProjectDetail() {
             {piece.brief}
           </RevealText>
           {piece.client && (
-            <p className="mt-8 label-caps text-ink-soft">
-              Client &mdash; {piece.client}
-            </p>
+            <p className="mt-8 label-caps text-ink-soft">Client &mdash; {piece.client}</p>
           )}
+          <div className="mt-8 flex items-center gap-2">
+            {piece.palette.map((c) => (
+              <span
+                key={c}
+                className="h-8 w-8 rounded-full border border-ink/10"
+                style={{ backgroundColor: c }}
+                title={c}
+              />
+            ))}
+          </div>
         </div>
         <div className="md:col-span-7 md:col-start-6">
-          <RevealText
-            as="p"
-            className="text-lg leading-relaxed text-ink-soft md:text-xl"
-          >
+          <RevealText as="p" className="text-lg leading-relaxed text-ink-soft md:text-xl">
             {piece.description}
           </RevealText>
         </div>
       </section>
 
-      {/* ── Gallery: alternating full-bleed and constrained ───────────── */}
-      <section className="space-y-24 pb-32 md:space-y-40 md:pb-48">
-        {piece.gallery.map((img: typeof piece.gallery[number], i: number) =>
-          img.fullBleed ? (
-            <figure key={i} className="w-full">
-              <Placeholder src={img.src} alt={img.alt} aspect={img.aspect} label={`Plate 0${i + 1}`} />
-              {img.caption && (
-                <figcaption className="editorial-container mt-4 label-caps text-ink-soft">
-                  {img.caption}
-                </figcaption>
-              )}
-            </figure>
-          ) : (
-            <figure key={i} className="editorial-container">
-              <div className="mx-auto max-w-3xl">
-                <Placeholder src={img.src} alt={img.alt} aspect={img.aspect} label={`Plate 0${i + 1}`} />
-                {img.caption && (
-                  <figcaption className="mt-4 font-italic-display text-base text-ink-soft md:text-lg">
-                    {img.caption}
-                  </figcaption>
-                )}
-              </div>
-            </figure>
-          ),
-        )}
-      </section>
-
-      {/* ── Next project ─────────────────────────────────────────────── */}
+      {/* Next project */}
       <section className="border-t border-ink/10 bg-paper py-24 md:py-32">
         <div className="editorial-container text-center">
           <p className="label-caps text-ink-soft">Next project &mdash; {next.number}</p>
