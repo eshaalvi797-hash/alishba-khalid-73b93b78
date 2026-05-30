@@ -12,6 +12,12 @@ import fierelle04 from "@/assets/brands/fierelle/04.jpg";
 import fierelle05 from "@/assets/brands/fierelle/05.jpg";
 import fierelle06 from "@/assets/brands/fierelle/06.jpg";
 
+import aurelia01 from "@/assets/brands/aurelia/01.jpg";
+import aurelia02 from "@/assets/brands/aurelia/02.jpg";
+import aurelia03 from "@/assets/brands/aurelia/03.jpg";
+import aurelia04 from "@/assets/brands/aurelia/04.jpg";
+import aurelia05 from "@/assets/brands/aurelia/05.jpg";
+
 export type Slide = {
   src: string;
   caption: string;
