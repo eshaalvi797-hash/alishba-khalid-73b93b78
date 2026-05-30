@@ -81,7 +81,7 @@ function ProjectDetail() {
             <p className="mt-8 label-caps text-ink-soft">Client &mdash; {piece.client}</p>
           )}
           <div className="mt-8 flex items-center gap-2">
-            {piece.palette.map((c) => (
+            {piece.palette.map((c: string) => (
               <span
                 key={c}
                 className="h-8 w-8 rounded-full border border-ink/10"
