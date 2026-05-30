@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ClothHero } from "@/components/three/ClothHero";
 import { RevealText } from "@/components/ui/RevealText";
 import { Placeholder } from "@/components/ui/Placeholder";
+import { PosterGallery } from "@/components/work/PosterGallery";
 import { posters } from "@/content/posters";
 import { work } from "@/content/work";
 
@@ -102,29 +103,7 @@ function Home() {
             </RevealText>
           </div>
 
-          <div className="grid grid-cols-1 gap-x-10 gap-y-16 md:grid-cols-2">
-            {posters.map((p, i) => (
-              <figure key={p.id} className={`group ${i % 2 === 1 ? "md:mt-20" : ""}`} data-cursor="hover">
-                <div className="overflow-hidden bg-paper-2">
-                  <img
-                    src={p.src}
-                    alt={p.alt}
-                    loading="lazy"
-                    className="aspect-video w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-                  />
-                </div>
-                <figcaption className="mt-5 flex items-baseline justify-between gap-4">
-                  <div>
-                    <p className="label-caps text-ink-soft">
-                      {p.number} &nbsp;/&nbsp; {p.category}
-                    </p>
-                    <h3 className="mt-2 font-display text-2xl text-ink md:text-3xl">{p.title}</h3>
-                  </div>
-                  <p className="label-caps text-ink-soft">{p.year}</p>
-                </figcaption>
-              </figure>
-            ))}
-          </div>
+          <PosterGallery posters={posters} />
         </div>
       </section>
 

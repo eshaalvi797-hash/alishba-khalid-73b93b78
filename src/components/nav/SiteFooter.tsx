@@ -19,8 +19,8 @@ export function SiteFooter() {
         </a>
 
         <div className="mt-16 flex flex-col-reverse gap-6 border-t border-ink/10 pt-8 md:flex-row md:items-end md:justify-between">
-          <p className="label-caps text-ink-soft">
-            &copy; {new Date().getFullYear()} Alishba Khalid — All work shown is original.
+          <p className="label-caps text-[0.65rem] text-ink-soft">
+            Alishba Khalid — All work shown is original. &copy; {new Date().getFullYear()}
           </p>
           <ul className="flex gap-6">
             <li>
