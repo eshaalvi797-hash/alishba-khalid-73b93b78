@@ -83,7 +83,10 @@ export function BrandSlider({ slides, title }: { slides: Slide[]; title: string 
       </div>
 
       {/* Thumbnail rail */}
-      <div className="mt-4 grid grid-cols-6 gap-2 md:gap-3">
+      <div
+        className="mt-4 grid gap-2 md:gap-3"
+        style={{ gridTemplateColumns: `repeat(${count}, minmax(0, 1fr))` }}
+      >
         {slides.map((s, i) => (
           <button
             key={i}
